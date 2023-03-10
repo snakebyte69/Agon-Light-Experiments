@@ -1,3 +1,6 @@
+; Snake fabGPL Experiments 10 March 2023
+; fabgl::VGAController, device driver for VGA bitmapped output
+
 ; Set org to 100h for CP/M
 	org 100h
 

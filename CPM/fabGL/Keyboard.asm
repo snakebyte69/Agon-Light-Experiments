@@ -1,5 +1,5 @@
-; Snake fabGPL Experiments 
-; fabgl::VGA4Controller, device driver for VGA 4 colors bitmapped output (low RAM requirements, CPU intensive)
+; Snake fabGPL Experiments 10 March 2023
+; fabgl::Keyboard, that controls a PS2 keyboard and translates scancodes to virtual keys or ASCII/ANSI codes
 
 ; Set org to 100h for CP/M
 org 100h
@@ -10,7 +10,7 @@ SPICON equ 8002h
 SPISTS equ 8004h
 
 ; Define constants for fabGL commands
-VGA4Controller equ 22h
+Keyboard equ 22h
 
 ; Setup SPI
 ld a, 0h            ; Set up SPI control register
@@ -19,7 +19,7 @@ ld a, 2h            ; Enable SPI
 out (SPISTS), a
 
 ; Send command to ESP32
-ld a, VGA4Controller ; Load command into accumulator
+ld a, Keyboard ; Load command into accumulator
 out (SPIDATA), a     ; Send command via SPI
 
 ; Disable SPI

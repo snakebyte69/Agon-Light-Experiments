@@ -1,40 +1,30 @@
-; Initialize SPI port
-LD A, 0b00000100  ; Enable SPI
-OUT (0x01), A     ; Write to control register
-LD A, 0b00000011  ; Set SPI clock speed to 1MHz
-OUT (0x02), A     ; Write to clock register
+; Snake fabGPL Experiments 10 March 2023
+; fabgl::VGA16Controller, device driver for VGA 16 colors bitmapped output (low RAM requirements, CPU intensive)
 
-; Initialize FabGL command
-LD HL, cmd_vga16 ; Load address of command buffer
-LD DE, spi_buffer ; Load address of SPI buffer
-LD BC, cmd_length ; Load command buffer length
+; Set org to 100h for CP/M
+org 100h
 
-; Send command via SPI
-ld a, (bc)
-ld b, 0
-ld c, a
-ld a, (de)
-rst 0x38          ; Send byte via SPI
-inc bc
-inc de
-djnz $-7         ; Loop for the rest of the bytes
+; Define constants for SPI registers
+SPIDATA equ 8000h
+SPICON equ 8002h
+SPISTS equ 8004h
 
-; Exit program
-RET
+; Define constants for fabGL commands
+VGA16Controller equ 22h
 
-; Command buffer for fabgl::VGA16Controller
-cmd_vga16:
-.DB 0x04, 0x00     ; Command code for fabgl::VGA16Controller
-.DB 0x00, 0x00     ; X-coordinate of top-left corner of display
-.DB 0x00, 0x00     ; Y-coordinate of top-left corner of display
-.DB 0x00, 0x00     ; Width of display in pixels
-.DB 0x00, 0x00     ; Height of display in pixels
-.DB 0x00           ; End of command buffer
+; Setup SPI
+ld a, 0h            ; Set up SPI control register
+out (SPICON), a      ;   (master, mode 0, no interrupts)
+ld a, 2h            ; Enable SPI
+out (SPISTS), a
 
-; Length of command buffer
-cmd_length:
-.DB $ - cmd_vga16
+; Send command to ESP32
+ld a, VGA16Controller ; Load command into accumulator
+out (SPIDATA), a     ; Send command via SPI
 
-; SPI buffer for sending command
-spi_buffer:
-.DB 0x00
+; Disable SPI
+ld a, 0h            ; Disable SPI
+out (SPISTS), a
+
+; End of program
+rst 0h              ; Return to CP/M

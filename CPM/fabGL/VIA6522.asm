@@ -1,5 +1,7 @@
-; Snake fabGPL Experiments 
-; fabgl::VGA4Controller, device driver for VGA 4 colors bitmapped output (low RAM requirements, CPU intensive)
+; Snake fabGPL Experiments 10 March 2023
+; fabgl::VIA6522, VIA 6522 emulator
+
+VIA6522
 
 ; Set org to 100h for CP/M
 org 100h
@@ -10,7 +12,7 @@ SPICON equ 8002h
 SPISTS equ 8004h
 
 ; Define constants for fabGL commands
-VGA4Controller equ 22h
+VIA6522 equ 22h
 
 ; Setup SPI
 ld a, 0h            ; Set up SPI control register
@@ -19,7 +21,7 @@ ld a, 2h            ; Enable SPI
 out (SPISTS), a
 
 ; Send command to ESP32
-ld a, VGA4Controller ; Load command into accumulator
+ld a, VIA6522 ; Load command into accumulator
 out (SPIDATA), a     ; Send command via SPI
 
 ; Disable SPI
