@@ -1,6 +1,6 @@
 # Agon-Light-Experiments
 Test code that may not work for others to read and provide advice
-My limited knowledge + ChatGPT
+My limited knowledge + ChatGPT + Help from actual experts
 Goals
 - Successfully get a fabGL command to the ESP32 under CP/M using
   - Z80 assembly
