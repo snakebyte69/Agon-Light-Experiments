@@ -1,5 +1,6 @@
 # Agon-Light-Experiments
 Test code that may not work for others to read and provide advice
+Yes I have written assembly and C for a long time, No I'm not an expert.
 My limited knowledge + ChatGPT + Help from actual experts
 Goals
 - Successfully get a fabGL command to the ESP32 under CP/M using
